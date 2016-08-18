@@ -1,0 +1,17 @@
+#!/usr/bin/with-contenv sh
+
+CONTAINER_HOST=$(cat /etc/hostname)
+if [ -z ${CONTAINER_HOST} ]; then
+    exit 1
+fi
+
+CONTAINER_IP=$(getent hosts ${CONTAINER_HOST}|awk '{ print $1 }')
+if [ -z ${CONTAINER_IP} ]; then
+    exit 2
+fi
+
+export CONTAINER_HOST
+export CONTAINER_IP
+
+printf "%s" "${CONTAINER_HOST}" > /var/run/s6/container_environment/CONTAINER_HOST
+printf "%s" "${CONTAINER_IP}" > /var/run/s6/container_environment/CONTAINER_IP
