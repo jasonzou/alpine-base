@@ -5,7 +5,7 @@ Alpine base docker with sshd
   3. sshd
   
 ## Build
-'''docker-composer build'''
+```docker-composer build```
 
 ## Run
-'''docker-composer up'''
+```docker-composer up```
