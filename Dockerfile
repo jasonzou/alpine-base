@@ -1,8 +1,7 @@
-FROM alpine:3.4
-MAINTAINER Boris HUISGEN <bhuisgen@hbis.fr>
+FROM alpine:3.6
 MAINTAINER Jason Zou <jason.zou@gmail.com>
 
-ENV S6OVERLAY_VERSION=v1.17.2.0 \
+ENV S6OVERLAY_VERSION=v1.19.1.1 \
     S6_BEHAVIOUR_IF_STAGE2_FAILS=1 \
     LANG=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8 \
@@ -12,8 +11,18 @@ ENV S6OVERLAY_VERSION=v1.17.2.0 \
 RUN apk update && \
     apk upgrade && \
     apk add bash bind-tools ca-certificates curl jq tar && \
+    apk --update add openssh rsync && \
+    sed -ri 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config && \
     curl -sSL https://github.com/just-containers/s6-overlay/releases/download/${S6OVERLAY_VERSION}/s6-overlay-amd64.tar.gz | tar xz -C / && \
-    apk del tar && \
+    echo "root:LibraryBlahBlah" | chpasswd && \
+    apk del bind-tools ca-certificates jq && \
     rm -rf /var/cache/apk/* /src
 
 COPY root /
+
+# EntryPoint
+ENTRYPOINT ["/init"]
+
+EXPOSE 22
+
+CMD []

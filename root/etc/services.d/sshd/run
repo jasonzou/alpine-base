@@ -1,0 +1,4 @@
+#!/usr/bin/with-contenv sh
+
+# Start sshd
+exec /usr/sbin/sshd -f /etc/ssh/sshd_config
