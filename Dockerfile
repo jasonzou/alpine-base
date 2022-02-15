@@ -1,7 +1,7 @@
-FROM alpine:3.6
+FROM alpine:latest
 MAINTAINER Jason Zou <jason.zou@gmail.com>
 
-ENV S6OVERLAY_VERSION=v1.19.1.1 \
+ENV S6OVERLAY_VERSION=v2.2.0.3 \
     S6_BEHAVIOUR_IF_STAGE2_FAILS=1 \
     LANG=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8 \
